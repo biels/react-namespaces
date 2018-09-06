@@ -1,6 +1,6 @@
 {
   "name": "react-namespaces",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A react namespace component. Make context-aware components easily!",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
