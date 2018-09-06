@@ -48,9 +48,34 @@ describe('namespaces', function () {
             </div>
         </Namespace>)
     });
+    it('top level absolute path', function () {
+        renderer.create(<Namespace name={'/level1'}>
+            <div>
+                <Namespace name={'level2'}>
+                    <div>
+                        <Namespace>
+                            {(level) => {
+                                expect(level).toEqual(['level1', 'level2'])
+                                return null
+                            }}
+                        </Namespace>
+                    </div>
+                </Namespace>
+            </div>
+        </Namespace>)
+    });
+    it('top level absolute path alone', function () {
+        renderer.create(<Namespace name={'/level1'}>
+            <Namespace>
+                {(level) => {
+                    expect(level).toEqual(['level1'])
+                    return null
+                }}
+            </Namespace>
+        </Namespace>)
+    });
     it('relative path', function () {
         renderer.create(<Namespace name={'level1'}>
-            <div>
                 <Namespace name={'level2'}>
                     <Namespace name={'../level3'}>
                         <Namespace>
@@ -60,8 +85,15 @@ describe('namespaces', function () {
                             }}
                         </Namespace>
                     </Namespace>
+                    <Namespace name={'../../level3'}>
+                        <Namespace>
+                            {(level) => {
+                                expect(level).toEqual(['level3'])
+                                return null
+                            }}
+                        </Namespace>
+                    </Namespace>
                 </Namespace>
-            </div>
         </Namespace>)
     });
 });

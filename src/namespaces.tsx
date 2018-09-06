@@ -37,14 +37,16 @@ export const Namespace = (props: { name?: string, children: any }) => {
                 {props.children}
             </NamespaceProvider>
         }}
-            </NamespaceConsumer>
-        }
-        export const PrintNamespace = (props: {}) => {
-        return <Namespace>
+    </NamespaceConsumer>
+}
+
+
+export const PrintNamespace = (props: {}) => {
+    return <Namespace>
         {(namespace) => {
             return <ol>
                 {namespace.join('.')}
             </ol>
         }}
-        </Namespace>
-    }
+    </Namespace>
+}
