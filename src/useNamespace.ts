@@ -1,0 +1,3 @@
+const useNamespace = (namespace) =>{
+    useContext()
+}
