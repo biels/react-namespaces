@@ -2,6 +2,7 @@ import {render, shallow} from "enzyme";
 import * as renderer from 'react-test-renderer';
 import * as React from "react";
 import {Namespace} from "./namespaces";
+import {useNamespace} from "./useNamespace";
 
 describe('namespaces', function () {
     it('one level namespace', function () {
@@ -76,24 +77,38 @@ describe('namespaces', function () {
     });
     it('relative path', function () {
         renderer.create(<Namespace name={'level1'}>
-                <Namespace name={'level2'}>
-                    <Namespace name={'../level3'}>
-                        <Namespace>
-                            {(level) => {
-                                expect(level).toEqual(['level1', 'level3'])
-                                return null
-                            }}
-                        </Namespace>
-                    </Namespace>
-                    <Namespace name={'../../level3'}>
-                        <Namespace>
-                            {(level) => {
-                                expect(level).toEqual(['level3'])
-                                return null
-                            }}
-                        </Namespace>
+            <Namespace name={'level2'}>
+                <Namespace name={'../level3'}>
+                    <Namespace>
+                        {(level) => {
+                            expect(level).toEqual(['level1', 'level3'])
+                            return null
+                        }}
                     </Namespace>
                 </Namespace>
+                <Namespace name={'../../level3'}>
+                    <Namespace>
+                        {(level) => {
+                            expect(level).toEqual(['level3'])
+                            return null
+                        }}
+                    </Namespace>
+                </Namespace>
+            </Namespace>
         </Namespace>)
+    });
+    it('one level namespace using hooks', function () {
+        const ComponentUsingNsHook = () => {
+            const level = useNamespace()
+            expect(level).toEqual(['level1'])
+            return null
+        }
+        renderer.create(
+            <Namespace name={'level1'}>
+                <div>
+                    <ComponentUsingNsHook/>
+                </div>
+            </Namespace>
+        )
     });
 });

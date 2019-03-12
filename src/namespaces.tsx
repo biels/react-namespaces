@@ -2,7 +2,8 @@ import * as React from "react";
 
 export type NamespaceContext = string[];
 
-const {Provider: NamespaceProvider, Consumer: NamespaceConsumer} = React.createContext<NamespaceContext>([]);
+export const NsContext = React.createContext<NamespaceContext>([]);
+const {Provider: NamespaceProvider, Consumer: NamespaceConsumer} = NsContext
 
 export const Namespace = (props: { name?: string, children: any }) => {
     // Read
