@@ -41,7 +41,13 @@ export const Namespace = (props: { name?: string, children: any }) => {
     </NamespaceConsumer>
 }
 
-
+export const withNamespace = (WrappedComponent) => {
+    return (props) => <Namespace>
+        {(namespace) => {
+            return <WrappedComponent {...props} namespace={namespace}/>
+        }}
+    </Namespace>
+}
 export const PrintNamespace = (props: {}) => {
     return <Namespace>
         {(namespace) => {

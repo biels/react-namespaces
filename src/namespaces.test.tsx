@@ -1,7 +1,7 @@
 import {render, shallow} from "enzyme";
 import * as renderer from 'react-test-renderer';
 import * as React from "react";
-import {Namespace} from "./namespaces";
+import {Namespace, withNamespace} from "./namespaces";
 import {useNamespace} from "./useNamespace";
 
 describe('namespaces', function () {
@@ -107,6 +107,22 @@ describe('namespaces', function () {
             <Namespace name={'level1'}>
                 <div>
                     <ComponentUsingNsHook/>
+                </div>
+            </Namespace>
+        )
+    });
+    it('one level namespace using HOC', function () {
+        const ComponentToWrap = (props) => {
+            const level = props.namespace
+            expect(level).toEqual(['level1'])
+            expect(props.name).toEqual('name1')
+            return null
+        }
+        const WrappedComponent = withNamespace(ComponentToWrap)
+        renderer.create(
+            <Namespace name={'level1'}>
+                <div>
+                    <WrappedComponent name={'name1'}/>
                 </div>
             </Namespace>
         )
