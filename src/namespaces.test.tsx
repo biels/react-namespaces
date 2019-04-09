@@ -1,7 +1,7 @@
 import {render, shallow} from "enzyme";
 import * as renderer from 'react-test-renderer';
 import * as React from "react";
-import {Namespace, withNamespace} from "./namespaces";
+import {Namespace, withNamespace, withNamespaceClass} from "./namespaces";
 import {useNamespace} from "./useNamespace";
 
 describe('namespaces', function () {
@@ -119,6 +119,22 @@ describe('namespaces', function () {
             return null
         }
         const WrappedComponent = withNamespace(ComponentToWrap)
+        renderer.create(
+            <Namespace name={'level1'}>
+                <div>
+                    <WrappedComponent name={'name1'}/>
+                </div>
+            </Namespace>
+        )
+    });
+    it('one level namespace using class HOC', function () {
+        const ComponentToWrap = (props) => {
+            const level = props.namespace
+            expect(level).toEqual(['level1'])
+            expect(props.name).toEqual('name1')
+            return null
+        }
+        const WrappedComponent = withNamespaceClass(ComponentToWrap)
         renderer.create(
             <Namespace name={'level1'}>
                 <div>

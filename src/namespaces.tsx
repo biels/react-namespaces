@@ -1,4 +1,5 @@
 import * as React from "react";
+import {ComponentType} from "react";
 
 export type NamespaceContext = string[];
 
@@ -41,6 +42,9 @@ export const Namespace = (props: { name?: string, children: any }) => {
     </NamespaceConsumer>
 }
 
+
+
+
 export const withNamespace = (WrappedComponent) => {
     return (props) => <Namespace>
         {(namespace) => {
@@ -48,6 +52,19 @@ export const withNamespace = (WrappedComponent) => {
         }}
     </Namespace>
 }
+export const withNamespaceClass = (WrappedComponent: ComponentType<any>) => {
+    return class WithName extends React.Component<{[other: string]: any}> {
+        render() {
+            return <Namespace>
+                {(namespace) => {
+                    return <WrappedComponent {...this.props} namespace={namespace}/>
+                }}
+            </Namespace>
+        }
+    }
+}
+
+
 export const PrintNamespace = (props: {}) => {
     return <Namespace>
         {(namespace) => {
